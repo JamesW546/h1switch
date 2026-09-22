@@ -1,0 +1,32 @@
+backend:
+  class: example_plugins:MockBackend
+  kwargs:
+    motor_count: 6
+    control_dt: 0.02
+
+initial_policy: policy_a
+switch_key: s
+
+transition:
+  seconds: 1.5
+  stable_seconds: 0.0
+  max_target_gap: 2.0
+
+safety:
+  q_lower: [-2, -2, -2, -2, -2, -2]
+  q_upper: [2, 2, 2, 2, 2, 2]
+  max_target_delta: 0.05
+
+policies:
+  policy_a:
+    class: example_plugins:HoldPositionAdapter
+    kwargs:
+      target: [0.0, 0.0, -0.3, 0.7, -0.4, 0.0]
+      kp: 100.0
+      kd: 5.0
+  policy_b:
+    class: example_plugins:HoldPositionAdapter
+    kwargs:
+      target: [0.1, -0.1, -0.5, 1.0, -0.5, 0.1]
+      kp: 140.0
+      kd: 8.0
